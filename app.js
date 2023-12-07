@@ -13,8 +13,8 @@ const ExpressError=require("./utils/ExpressError.js");
 
 
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust"; // this is local database
-// const dbUrl  =process.env.ATLASDB_URL;  // This is ATlas database
+//const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust"; // this is local database
+ const dbUrl  =process.env.ATLASDB_URL;  // This is ATlas database
 const session =require("express-session");
 const MongoStore = require('connect-mongo');
 const flash =require("connect-flash");
@@ -34,7 +34,7 @@ main()
   });
 
 async function main() {
-  await mongoose.connect(MONGO_URL);
+  await mongoose.connect(dbUrl);
 }
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -44,7 +44,7 @@ app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
 const store =MongoStore.create({
-  mongoUrl:MONGO_URL,
+  mongoUrl:dbUrl,
   crypto: {
     secret: process.env.SECRET,
   },
